@@ -34,7 +34,7 @@ var Page = db.define('page', {
 );
 
 Page.hook('beforeValidate', (page, options) =>{
-  //below line will automatically remove white spaces & non alpha-numeric
+  //below line will automatically remove white spaces & non alpha-numeric!
   page.urlTitle =  page.title.replace(/ /g,'_').replace(/[^\w\d\s:]/g, '');
 });
 
