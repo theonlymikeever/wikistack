@@ -32,6 +32,9 @@ const port = process.env.PORT || 3000;
 app.get('/', function(req, res, next){
   res.render('index');
 })
+app.use((err, req, res, next) =>{
+  res.render('error', { err });
+})
 
 //sync
 models.db.sync({force: true})

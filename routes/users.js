@@ -11,22 +11,22 @@ router.get('/', (req, res, next) => {
     res.render('users', { users });
   })
   .catch(next);
-})
+});
 
 router.get('/:id', (req, res, next) => {
   let foundUser = User.findAll({
     where: {
       id: req.params.id
     }
-  })
+  });
   let foundPages = Page.findAll({
     where: {
       authorId: req.params.id
     }
-  })
+  });
   Promise.all([foundUser, foundPages])
   .then(function(result){
-    res.render('users', { users: result[0], pages: result[1] });
+    res.render('singleUser', { user: result[0], pages: result[1] });
   })
   .catch(next);
 });

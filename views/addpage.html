@@ -3,8 +3,7 @@
 {% block content %}
   <h3>Add a Page</h3>
   <hr>
-  <form method="POST" action="/wiki/">
-
+  <form method="POST" action="/wiki/" class="form-horizontal">
     <div class="form-group">
       <label for="author" class="col-sm-2 control-label">Author</label>
       <div class="col-sm-10">
@@ -17,7 +16,7 @@
       <div class="col-sm-10">
         <input name="email" type="text" class="form-control"/>
       </div>
-    </div>
+      </div>
 
     <div class="form-group">
       <label for="title" class="col-sm-2 control-label">Page Title</label>
@@ -27,17 +26,21 @@
     </div>
 
     <div class="form-group">
-      <label for="pageContent" class="col-sm-2 control-label">Page Content</label>
+      <label for="content" class="col-sm-2 control-label">Page Content</label>
       <div class="col-sm-10">
-        <textarea name="pageContent" type="text" class="form-control"></textarea>
+        <textarea name="content" type="text" class="form-control"></textarea>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="pageStatus" class="col-sm-2 control-label">Page Status</label>
-      <div class="col-sm-10">
-        <input name="pageStatus" type="text" class="form-control"/>
-      </div>
+      <label for="status" class="col-sm-2 control-label">Page Status</label>
+        <div class="col-sm-10">
+        <select name="pageStatus" class="form-control">
+          <option>Open</option>
+          <option>closes</option>
+        </select>
+        </div>
+    </div>
     </div>
 
     <div class="col-sm-offset-2 col-sm-10">

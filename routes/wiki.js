@@ -23,10 +23,7 @@ router.post('/', (req, res, next) => {
   .then(function(result){
     let user = result[0];
     //build page
-    let page = Page.build({
-      title: req.body.title,
-      content: req.body.pageContent
-    });
+    let page = Page.build(req.body);
     return page.save().then(function (page) {
       return page.setAuthor(user);
     });
@@ -45,19 +42,21 @@ router.get('/add', (req, res, next) => {
 router.get('/:urlTitle', (req, res, next) => {
   Page.findAll({
     where: {
-      urlTitle : req.params.urlTitle
+      urlTitle: req.params.urlTitle
     }
   })
   .then(function(page){
+    console.log('here')
     res.locals.page = page[0].dataValues;
     return page[0].getAuthor();
   })
   .then(function(author){
     res.locals.author = author.dataValues;
     res.render('wikipage');
+
   })
   .catch(next);
-})
+});
 
 //exports
 module.exports = router;

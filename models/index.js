@@ -21,25 +21,26 @@ const Page = db.define('page', {
         defaultValue: Sequelize.NOW
     }
   }, {
+      hooks: {
+        beforeValidate: (page, options) => {
+            //below line will automatically remove white spaces & non alpha-numeric!
+          //else random string
+          page.urlTitle = page.title ?
+            page.title.replace(/ /g,'_').replace(/[^\w\d\s:]/g, '') :
+            Math.random().toString(36).substring(2, 7);
+
+        }
+      },
       getterMethods: {
         route(){
           return '/wiki/' + this.urlTitle;
         }
-      }
-    }, {
+      },
       setterMethods: {
         //here
       }
     }
 );
-
-Page.hook('beforeValidate', (page, options) =>{
-  //below line will automatically remove white spaces & non alpha-numeric!
-  //else random string
-  page.urlTitle = page.title ?
-    page.title.replace(/ /g,'_').replace(/[^\w\d\s:]/g, '') :
-    Math.random().toString(36).substring(2, 7);
-});
 
 const User = db.define('user', {
     name: {
