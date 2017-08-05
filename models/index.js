@@ -1,9 +1,9 @@
 //requires
-var Sequelize = require('sequelize');
-var db = new Sequelize('postgres://localhost:5432/wikistack');
+const Sequelize = require('sequelize');
+const db = new Sequelize('postgres://localhost:5432/wikistack');
 
 //models
-var Page = db.define('page', {
+const Page = db.define('page', {
     title: {
         type: Sequelize.STRING, allowNull: false
     },
@@ -23,7 +23,7 @@ var Page = db.define('page', {
   }, {
       getterMethods: {
         route(){
-          return '/wiki/' + this.title;
+          return '/wiki/' + this.urlTitle;
         }
       }
     }, {
@@ -35,10 +35,13 @@ var Page = db.define('page', {
 
 Page.hook('beforeValidate', (page, options) =>{
   //below line will automatically remove white spaces & non alpha-numeric!
-  page.urlTitle =  page.title.replace(/ /g,'_').replace(/[^\w\d\s:]/g, '');
+  //else random string
+  page.urlTitle = page.title ?
+    page.title.replace(/ /g,'_').replace(/[^\w\d\s:]/g, '') :
+    Math.random().toString(36).substring(2, 7);
 });
 
-var User = db.define('user', {
+const User = db.define('user', {
     name: {
         type: Sequelize.STRING, allowNull: false
     },
@@ -49,6 +52,8 @@ var User = db.define('user', {
     }
 });
 
+//associations
+Page.belongsTo(User, { as: 'author' });
 
 //exports
 module.exports = {

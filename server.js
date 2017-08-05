@@ -39,6 +39,13 @@ models.db.sync({force: true})
     app.listen(port, function(req, res, next){
       console.log(`listing on port ${port}`);
     })
+  }) //seeding test page
+  .then(function(){
+    models.Page.create({
+      title: 'test',
+      content: 'efwijfowijfowjefo',
+      urlTitle: 'test'
+    })
   })
   .catch(console.error);
 
